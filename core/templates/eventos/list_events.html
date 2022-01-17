@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Eventos{% endblock %}
+
+{% load my_filter %}
+
+{% load static %}
+
+{% block content %}
+<div class="mt-2 p-2">
+    <center>
+        <h3><b>Lista Eventos</b></h3>
+    </center>
+</div>
+<hr>
+<div class="table-responsive">
+    <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+        <table class="table table-hover table-bordered dataTable" id="events-list" role="grid">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Nome</th>
+                    <th>Data do Evento</th>
+                    <th>Prioridade</th>
+                    <th>Evento concluído</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in object_list|sort_by:'-lv_prioridade' %}
+                <tr id="{{ evento.pk }}">
+                    <th>{{ forloop.counter }}</th>
+                    <td>{{ evento.nome }}
+                    </td>
+                    <td>{{ evento.data_inicio }}
+                    </td>
+                    <td>{{ evento.priority }}
+                    </td>
+                    {% if evento.concluido %}
+                    <td>✔</td>
+                    {% else %}
+                    <td>❌</td>
+                    {% endif %}
+                    <td>
+                        {% if not evento.concluido %}
+                        <a href="{% url 'event:update_event' evento.pk %}" class="btn btn-warning btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                            </svg></a> {% endif %}
+                        <a href="{% url 'event:detail_event' evento.pk %}" class="btn btn-info btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path
+                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg></a>
+                        <a href="{% url 'event:delete_event' evento.pk %}" class="btn btn-danger btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                            </svg></a>
+                    </td>
+                </tr>
+                {% empty %}
+                <div class="p-5 mt-5 center center-v" style="text-align: center;">
+                    <span>Desulpe, mas não encontramos nenhuma evento cadastrada!<br>
+                        Você pode adicionar uma nova evento clicando neste botão abaixo!
+                        <p><a class="btn btn-primary btn-sm mt-3" href="{% url 'event:add_evento' %}" role="button">Novo
+                                evento</a></p>
+                    </span>
+                </div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock%}
+
+{% block scripts %}
+<!-- Jquery -->
+<script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'jquery/jquery.mask.min.js' %}"></script>
+<script src="{% static 'jquery/mask.js' %}"></script>
+<!-- DataTable JS -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.3/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#events-list').DataTable({
+            responsive: true,
+            "pageLength": 10,
+            "language": {
+                "decimal": ",",
+                "emptyTable": "Sem dados disponíveis",
+                "info": "Mostrando de _START_ até _END_ de _TOTAL_ evento",
+                "infoEmpty": "Mostrando de 0 até 0 de 0 evento",
+                "infoFiltered": "(filtrado de _MAX_ evento no total)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ evento",
+                "loadingRecords": "A carregar dados...",
+                "processing": "A processar...",
+                "search": "Procurar:",
+                "zeroRecords": "Não foram encontradas nenhuma consulta com este filtro",
+                "paginate": {
+                    "first": "Primeiro",
+                    "last": "Último",
+                    "next": "Seguinte",
+                    "previous": "Anterior"
+                },
+                "aria": {
+                    "sortAscending": ": ordem crescente",
+                    "sortDescending": ": ordem decrescente"
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

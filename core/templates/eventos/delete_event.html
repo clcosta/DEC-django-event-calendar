@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Excluir Evento{% endblock %}
+
+{% block content %}
+<h1 class= "justify-content-center">Excluir Evento</h1>
+<div class="container justify-content-center md-5 mt-2 p-2">
+    <p style="font-size:larger;">Você tem certeza que deseja excluir o <b>{{ object }}</b>, marcada para o dia <b>{{ object.data_inicio }}</b>?</p>
+    <p>Atualmente está Evento está : <b>{{ object.conclusao }}</b></p>
+    <form action="" method="post" class="mt-1">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-secondary" value="Não! Me leve de volta" name="cancelar"/>
+        <input type="submit" class="btn btn-danger" value="Excluir" name="delete" />
+    </form>
+</div>
+{% endblock %}
+{% block class-footer %}"fixed-bottom"{% endblock %}

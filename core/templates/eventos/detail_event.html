@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Detalhes Evento{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="main-body">
+        <div class="row gutters-sm">
+            <div class="col-md-12">
+                <div>
+                    <center>
+                        <h3><b>Informações do Evento</b></h3>
+                    </center>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nome do Evento</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ object.nome }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Descricao</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ object.descricao }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Data Inicio</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ object.data_inicio }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Data Final</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ object.data_final }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Prioridade</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ object.priority }}
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Status</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <span>{{ object.conclusao }}</span>{% if not object.concluido %}
+                                <a class="btn btn-warning ml-2" target="__blank" href="{% url 'event:update_event' object.pk %}">Atualizar</a>{% endif %}
+                            </div>
+
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

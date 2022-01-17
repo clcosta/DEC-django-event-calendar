@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from core import views
 
 
@@ -8,5 +8,5 @@ urlpatterns = [
     ## My urls
     path('', views.HomePage.as_view(), name='home'),
     path('calendario/', views.CalendarPage.as_view(), name="calendar"),
-    path('event/add/', views.AddEvent.as_view(), name="add_event"),
+    path("event/", include(("core.urls", "event"), namespace="event")),
 ]

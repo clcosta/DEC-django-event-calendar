@@ -1,3 +1,5 @@
+import datetime
+
 from django import template
 
 register = template.Library()
@@ -15,3 +17,7 @@ def event_color(obj):
             return "#A52A2A"
         case 4:
             return "#FF0000"
+
+@register.filter(name="sort_by")
+def sort_by(obj, order):
+    return obj.order_by(order)

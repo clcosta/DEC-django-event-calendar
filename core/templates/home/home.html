@@ -11,8 +11,9 @@
     <div class="row h-100 w-100 justify-content-center align-items-center">
         <div class="col-10 col-md-8 col-lg-6">
 
-            <a href="{% url 'calendar' %}" class="btn btn-info">Calendario</a>
-            <a href="{% url 'add_event' %}" class="btn btn-info">Adicionar Eventos</a>
+            <a href="{% url 'calendar' %}" class="btn btn-info">Calendário</a>
+            <a href="{% url 'event:add_event' %}" class="btn btn-info">Adicionar Eventos</a>
+            <a href="{% url 'event:list_event' %}" class="btn btn-info">Eventos</a>
 
         </div>
     </div>

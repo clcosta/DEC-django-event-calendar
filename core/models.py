@@ -13,7 +13,7 @@ priority_choices = (
 def get_data_final():
     if hasattr(settings, 'TEMPO_EVENTO'):
         return timezone.now() + timezone.timedelta(minutes=settings.TEMPO_EVENTO)
-    return timezone.now()
+    return timezone.now() + timezone.timedelta(minutes=60)
 
 class Event(models.Model):
 

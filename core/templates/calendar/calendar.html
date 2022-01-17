@@ -59,7 +59,7 @@
                 NovoEvento: {
                     text: 'Novo Evento',
                     click: function () {
-                        window.open("{% url 'add_event' %}");
+                        window.open("{% url 'event:add_event' %}");
                     }
                 }
             },
@@ -82,7 +82,7 @@
                 list: 'Eventos'
             },
             events: [
-                // {% for evento in object_list %}
+                {% for evento in object_list %}
                 {
                     id: "{{ evento.pk }}",
                     title: "{{ evento.nome }}",
@@ -91,8 +91,9 @@
                     description: '{{ evento.descricao }}',
                     backgroundColor: "{{ evento|event_color }}",
                     borderColor: "{{ evento|event_color }}",
+                    url: "{% url 'event:detail_event' evento.pk %}"
                 },
-                // {% endfor %}
+                {% endfor %}
             ],
             eventTimeFormat: { hour: "numeric", minute: "2-digit" },
         });

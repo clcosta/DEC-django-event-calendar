@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block title %}{% if not is_update %}Adicionar Evento{% else %}Atualizar Evento{% endif %}{% endblock %}
+
+{% block content %}
+<div class="mt-2 p-2">
+    <center>
+        <h3><b>{% if not is_update %}Adicionar Evento{% else %}Atualizar Evento{% endif %}</b></h3>
+    </center>
+</div>
+<hr>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+            <form class="form" action="" method="POST">
+                {% csrf_token %}
+                {{form|crispy}}
+                {% if not is_update %}<button type="submit" class="btn btn-primary mt-3">Adicionar</button>{% else %}<button type="submit" class="btn btn-warning mt-3">Atualizar</button>{% endif %}
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Jquery -->
+<script src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'jquery/jquery.mask.min.js' %}"></script>
+<script src="{% static 'jquery/mask.js' %}"></script>
+{% endblock %}
