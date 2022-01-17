@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Calendario{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+{% load my_filter %}
+
+<div>
+    <center>
+        <h3><b>Calendario</b></h3>
+    </center>
+</div>
+<div id="calendario" class="card md-2 h-50" style="padding: 20px;">
+
+</div>
+<div class="mt-5 p-5"></div>
+{% endblock %}
+
+{% block styles %}
+<!-- Fullcalendar css -->
+<link rel="stylesheet" href="{% static 'fullcalendar/main.css' %}">
+<style>
+    .fc a[data-navlink] {
+        color: inherit;
+        text-decoration-line: none;
+        text-decoration: solid;
+        text-decoration-style: solid;
+    }
+
+    .fc a[data-navlink]:hover {
+        color: #00dbd0;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .fc a.fc-col-header-cell-cushion {
+        color: inherit;
+        text-decoration-line: none;
+        text-decoration: solid;
+        text-decoration-style: solid;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<!-- Fullcalendar js -->
+<script src="{% static 'fullcalendar/main.js' %}"></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendario');
+        var today = new Date();
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            customButtons: {
+                NovoEvento: {
+                    text: 'Novo Evento',
+                    click: function () {
+                        window.open("{% url 'add_event' %}");
+                    }
+                }
+            },
+            headerToolbar: {
+                left: 'prev,next NovoEvento today',
+                center: 'title',
+                right: 'dayGridMonth timeGridWeek timeGridDay list'
+            },
+            initialView: 'dayGridMonth',
+            nowIndicator: true,
+            navLinks: true,
+            selectable: false,
+            dayMaxEvents: true,
+            eventDisplay: 'block',
+            buttonText: {
+                today: 'Hoje',
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                list: 'Eventos'
+            },
+            events: [
+                // {% for evento in object_list %}
+                {
+                    id: "{{ evento.pk }}",
+                    title: "{{ evento.nome }}",
+                    start: '{{ evento.data_inicio |date:"c" }}',
+                    end: '{{ evento.data_inicio |date:"c" }}',
+                    description: '{{ evento.descricao }}',
+                    backgroundColor: "{{ evento|event_color }}",
+                    borderColor: "{{ evento|event_color }}",
+                },
+                // {% endfor %}
+            ],
+            eventTimeFormat: { hour: "numeric", minute: "2-digit" },
+        });
+        calendar.setOption('locale', 'pt-br')
+        calendar.render();
+    });
+
+</script>
+{% endblock %}
