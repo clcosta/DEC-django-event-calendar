@@ -4,7 +4,6 @@
 A ideia deste projeto surgiu de várias pesquisas, com a ideia de criar um calendário de eventos. Criação de eventos que serão implementadas em um calendário de forma visual, que sejá  mais fácil de ver os horários disponíveis e o nível de prioridade dos eventos.
 
 ## Redes Sociais
-* [Site](https://portfolio-claudio.herokuapp.com)
 * [Instagram](https://www.instagram.com/claudiogfez/)
 * [Linkedin](https://www.linkedin.com/in/clcostaf/)
 
